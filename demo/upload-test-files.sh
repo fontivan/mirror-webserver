@@ -11,5 +11,5 @@ echo "Uploading files to '$SERVER_URL'"
 
 for FILE in $(ls ./example-files);
 do
-    curl -k -T ./example-files/$FILE $SERVER_URL/$FILE
+    curl -k -T ./example-files/$FILE $SERVER_URL/upload/$FILE
 done
