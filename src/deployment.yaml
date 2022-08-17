@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
       - name: mirror-webserver
-        image: image-registry.openshift-image-registry.svc:5000/app-mod-dev/build-mirror-webserver:latest
+        image: image-registry.openshift-image-registry.svc:5000/default/mirror-webserver:latest
         ports:
         - containerPort: 8080
       restartPolicy: Always

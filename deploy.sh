@@ -17,7 +17,7 @@ function loop() {
         sleep $interval
         local result
         result=$(oc describe build mirror-webserver | grep 'Status' | awk '{print $2}')
-        if [[ "$result" == *"Success"* ]]
+        if [[ "$result" == *"Complete"* ]]
         then
             echo "Build is successful!"
             return 0
