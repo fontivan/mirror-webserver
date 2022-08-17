@@ -7,4 +7,5 @@ then
 fi  
 
 oc delete -f src/deployment.yaml
-oc delete bc test-webserver
+oc delete -f src/buildconfig.yaml
+oc delete route test-webserver
