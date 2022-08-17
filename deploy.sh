@@ -7,6 +7,6 @@ then
 fi  
 
 oc apply -f src/buildconfig.yaml
-oc start-build test-webserver --follow
+oc start-build mirror-webserver --follow
 oc apply -f src/deployment.yaml
-oc expose svc/test-webserver
+oc expose svc/mirror-webserver

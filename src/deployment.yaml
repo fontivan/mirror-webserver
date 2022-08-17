@@ -1,12 +1,12 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: test-webserver
+  name: mirror-webserver
   labels:
-    app: test-webserver
+    app: mirror-webserver
 spec:
   selector:
-    app: test-webserver
+    app: mirror-webserver
   ports:
     - port: 8080
       name: http
@@ -16,23 +16,23 @@ spec:
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: test-webserver
+  name: mirror-webserver
   labels:
-    app: test-webserver
+    app: mirror-webserver
 spec:
   selector:                
     matchLabels:     
-      app: test-webserver
+      app: mirror-webserver
   replicas: 1
   template:
     metadata:
       labels:
-        app: test-webserver
+        app: mirror-webserver
         version: v1
     spec:
       containers:
-      - name: test-webserver
-        image: image-registry.openshift-image-registry.svc:5000/app-mod-dev/build-test-webserver:latest
+      - name: mirror-webserver
+        image: image-registry.openshift-image-registry.svc:5000/app-mod-dev/build-mirror-webserver:latest
         ports:
         - containerPort: 8080
       restartPolicy: Always

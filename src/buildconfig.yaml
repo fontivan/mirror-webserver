@@ -1,9 +1,9 @@
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
-  name: test-webserver
+  name: mirror-webserver
   labels:
-    name: test-webserver
+    name: mirror-webserver
 spec:
   triggers:
     - type: ConfigChange
@@ -11,7 +11,7 @@ spec:
     contextDir: "/"
     type: Git
     git:
-      uri: 'https://github.com/fontivan/test-webserver.git'
+      uri: 'https://github.com/fontivan/mirror-webserver.git'
   strategy:
     type: Docker
     dockerStrategy:
@@ -19,4 +19,4 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: 'test-webserver:latest'
+      name: 'mirror-webserver:latest'

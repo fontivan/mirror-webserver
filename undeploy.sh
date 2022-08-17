@@ -8,4 +8,4 @@ fi
 
 oc delete -f src/deployment.yaml
 oc delete -f src/buildconfig.yaml
-oc delete route test-webserver
+oc delete route mirror-webserver
