@@ -6,7 +6,14 @@ then
     exit 1
 fi  
 
+# Upload build config
 oc apply -f src/buildconfig.yaml
-oc start-build mirror-webserver --follow
+
+# Wait for build to finish
+echo 'tbd'
+
+# Upload deploy config
 oc apply -f src/deployment.yaml
+
+# Expose application
 oc expose svc/mirror-webserver

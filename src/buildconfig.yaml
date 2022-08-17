@@ -8,14 +8,14 @@ spec:
   triggers:
     - type: ConfigChange
   source:
-    contextDir: "/"
+    contextDir: "src/"
     type: Git
     git:
       uri: 'https://github.com/fontivan/mirror-webserver.git'
   strategy:
     type: Docker
     dockerStrategy:
-      dockerfilePath: "src/Containerfile"
+      dockerfilePath: "Containerfile"
   output:
     to:
       kind: ImageStreamTag
