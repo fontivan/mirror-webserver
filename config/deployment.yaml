@@ -35,5 +35,12 @@ spec:
         image: image-registry.openshift-image-registry.svc:5000/default/mirror-webserver:latest
         ports:
         - containerPort: 8080
+        volumeMounts:
+        - mountPath: /data
+          name: mirror-data
+      volumes:
+      - name: mirror-data
+        persistentVolumeClaim:
+          claimName: mirror-data
       restartPolicy: Always
 ---

@@ -49,7 +49,7 @@ then
 fi
 
 # Upload build config
-oc apply -f src/buildconfig.yaml
+oc apply -f config/buildconfig.yaml
 
 # Create image stream
 oc create is mirror-webserver
@@ -62,7 +62,7 @@ then
 fi
 
 # Upload deploy config
-oc apply -f src/deployment.yaml
+oc apply -f config/deployment.yaml
 
 # Expose application
 oc expose svc/mirror-webserver

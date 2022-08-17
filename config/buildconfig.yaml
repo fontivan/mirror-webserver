@@ -8,7 +8,7 @@ spec:
   triggers:
     - type: ConfigChange
   source:
-    contextDir: "src/"
+    contextDir: "container/"
     type: Git
     git:
       uri: 'https://github.com/fontivan/mirror-webserver.git'

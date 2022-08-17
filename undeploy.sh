@@ -7,7 +7,7 @@ then
 fi  
 
 # Delete everything
-oc delete -f src/deployment.yaml
-oc delete -f src/buildconfig.yaml
+oc delete -f config/deployment.yaml
+oc delete -f config/buildconfig.yaml
 oc delete route mirror-webserver
 oc delete is mirror-webserver
