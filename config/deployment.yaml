@@ -13,35 +13,35 @@ spec:
   type: NodePort
 ---
 
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: mirror-webserver-pv
-  labels:
-    type: local
-spec:
-  accessModes:
-    - ReadWriteMany
-  capacity:
-    storage: 10Gi
-  hostPath:
-    path: "/mnt/data/mirror-webserver-pv"
----
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: mirror-webserver-pv
+#   labels:
+#     type: local
+# spec:
+#   accessModes:
+#     - ReadWriteMany
+#   capacity:
+#     storage: 10Gi
+#   hostPath:
+#     path: "/mnt/data/mirror-webserver-pv"
+# ---
 
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mirror-webserver-pvc
-  namespace: default
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 5Gi
-  storageClassName: "" # Empty string must be explicitly set otherwise default StorageClass will be set
-  volumeName: mirror-webserver-pv
----
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: mirror-webserver-pvc
+#   namespace: default
+# spec:
+#   accessModes:
+#     - ReadWriteMany
+#   resources:
+#     requests:
+#       storage: 5Gi
+#   storageClassName: "" # Empty string must be explicitly set otherwise default StorageClass will be set
+#   volumeName: mirror-webserver-pv
+# ---
 
 kind: Deployment
 apiVersion: apps/v1
@@ -60,27 +60,34 @@ spec:
         app: mirror-webserver
         version: v1
     spec:
-      initContainers:
-      - name: change-ownership-container
-        image: registry.access.redhat.com/ubi9
-        command: ["/bin/chown","-R","994:994", "/data"]
-        securityContext:
-          runAsUser: 0
-          privileged: true
-        volumeMounts:
-        - mountPath: /data
-          name: mirror-webserver-data
+      # initContainers:
+      # - name: change-ownership-container
+      #   image: registry.access.redhat.com/ubi9
+      #   command:
+      #   - sh
+      #   - -c
+      #   - /bin/chown -R 994:994 /data
+      #   - /bin/chmod -R 750 /data
+      #   securityContext:
+      #     runAsUser: 0
+      #     privileged: true
+      #   volumeMounts:
+      #   - mountPath: /data
+      #     name: mirror-webserver-data
       containers:
       - name: mirror-webserver
         image: image-registry.openshift-image-registry.svc:5000/default/mirror-webserver:latest
         ports:
         - containerPort: 8080
-        volumeMounts:
-        - mountPath: /data
-          name: mirror-webserver-data
-      volumes:
-      - name: mirror-webserver-data
-        persistentVolumeClaim:
-          claimName: mirror-webserver-pvc
+        # volumeMounts:
+        # - mountPath: /data
+        #   name: mirror-webserver-data
+      # volumes:
+      # - name: mirror-webserver-data
+      #   persistentVolumeClaim:
+      #     claimName: mirror-webserver-pvc
+      # securityContext:
+      #   runAsUser: 994
+      #   fsGroup: 994
       restartPolicy: Always
 ---
