@@ -2,8 +2,6 @@ FROM registry.access.redhat.com/ubi9/nginx-120
 COPY nginx.conf /etc/nginx/nginx.conf
 EXPOSE 8080:8080
 USER root
-RUN mkdir -p /data/incoming
-RUN chown -R nginx:nginx /data
-RUN chmod o+rw /data
+RUN mkdir -p /data/incoming && chown -R nginx:nginx /data
 USER nginx
 CMD ["nginx", "-g", "daemon off;"]
