@@ -1,0 +1,22 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: test-webserver
+  labels:
+    name: test-webserver
+spec:
+  triggers:
+    - type: ConfigChange
+  source:
+    contextDir: "test-webserver/"
+    type: Git
+    git:
+      uri: 'https://github.com/fontivan/test-webserver.git'
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: "src/Containerfile"
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'test-webserver:latest'
