@@ -15,28 +15,29 @@ function loop() {
     do
         echo "Beginning attempt #$current_attempt"
         sleep $interval
-        if is_build_success;
+        local result
+        result=$(oc describe build mirror-webserver | grep 'Status' | awk '{print $2}')
+        if [[ "$result" == *"Success"* ]]
         then
             echo "Build is successful!"
             return 0
+        elif [[ "$result" == *"Running"* ]]
+        then
+            echo "Build is still running, will try again soon..."
+        elif [[ "$result" == *"Failed"* ]]
+        then
+            echo "Build has failed."
+            break
+        elif [[ "$result" == *"New"* ]]
+        then
+            echo "Build has not started yet, will try again soon..."
+            break
         else
-            echo "Build is not successful yet, will try again soon..."
+            echo "Current build status: '${result}'"
         fi
         current_attempt=$((current_attempt+1))
     done
 
-    return 1
-}
-
-function is_build_success() {
-
-    local status
-    status=$(oc describe build mirror-webserver | grep 'Status' | awk '{print $2}')
-    echo "Current build status is: '${status}'"
-    if [[ "${status}" == "Success" ]]
-    then
-        return 0
-    fi
     return 1
 }
 
