@@ -4,5 +4,6 @@ EXPOSE 8080:8080
 USER root
 RUN mkdir -p /data/incoming
 RUN chown -R nginx:nginx /data
+RUN chmod o+rw /data
 USER nginx
 CMD ["nginx", "-g", "daemon off;"]
