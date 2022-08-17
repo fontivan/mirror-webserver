@@ -5,5 +5,4 @@ USER root
 RUN mkdir -p /data/incoming
 RUN chown -R nginx:nginx /data
 USER nginx
-COPY README.txt /data/incoming/README.txt
 CMD ["nginx", "-g", "daemon off;"]
