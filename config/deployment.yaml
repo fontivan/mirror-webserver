@@ -60,6 +60,16 @@ spec:
         app: mirror-webserver
         version: v1
     spec:
+      initContainers:
+      - name: change-ownership-container
+        image: busybox
+        command: ["/bin/chown","-R","994:1994", "/data"]
+        securityContext:
+          runAsUser: 0
+          privileged: true
+        volumeMounts:
+        - mountPath: /data
+          name: mirror-webserver-data
       containers:
       - name: mirror-webserver
         image: image-registry.openshift-image-registry.svc:5000/default/mirror-webserver:latest
@@ -72,9 +82,5 @@ spec:
       - name: mirror-webserver-data
         persistentVolumeClaim:
           claimName: mirror-webserver-pvc
-      securityContext:
-        runAsUser: 994
-        runAsGroup: 994
-        fsGroup: 994
       restartPolicy: Always
 ---
